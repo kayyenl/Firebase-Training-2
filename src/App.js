@@ -1,11 +1,11 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, addDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import db from "./firebase";
 
 function App() {
   const [users, setUsers] = useState([])
   const [name, setName] = useState("")
-  const [age, setAge] = useState("")
+  const [age, setAge] = useState(0)
   //establishing a connection to a specific collection
   const usersCollectionRef = collection(db, "users")
   const userCollectionRef = doc(db, "users", "pedoo")
@@ -24,11 +24,14 @@ function App() {
     }
 
     getUsers()
-  }, [])
+  }, [users])
 
   async function createUser(e) {
     e.preventDefault()
-    console.log(name, age)
+    await addDoc(usersCollectionRef, {
+      name: name,
+      age: age,
+    })
   }
 
   return (
@@ -40,7 +43,9 @@ function App() {
       </form>
       {users.map((doc) => <>
         <h1> {doc.name} </h1>
-        <p> {doc.id} </p>
+        <h2>He is {doc.age}</h2>
+        <h3>Aaaand his id is {doc.id} </h3>
+        <br></br>
       </> )}
     </div>
   );
