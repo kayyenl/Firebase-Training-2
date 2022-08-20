@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -18,4 +24,15 @@ form {
   max-width: 500px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 42px;
+}
+
+.data__entry {
+  text-align: center;
+}
+
+.age__increaser {
+  padding: 8px;
+  margin: 10px;
+  border-radius: 10px;
 }

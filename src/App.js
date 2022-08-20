@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, addDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, addDoc, updateDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import db from "./firebase";
 
@@ -34,6 +34,13 @@ function App() {
     })
   }
 
+  async function updateAge(id, age) {
+    const userRef = doc(db, "users", id)
+    await updateDoc(userRef, {
+      age: age + 1
+    })
+  }
+
   return (
     <div className="App">
       <form>
@@ -41,12 +48,19 @@ function App() {
         <input placeholder="add ur age here..." type="number" value={age} onChange={(event) => setAge(event.target.value)}></input>
         <button onClick={createUser}> Create a user! </button>
       </form>
-      {users.map((doc) => <>
+      {users.map((doc) => <div className="data__entry">
         <h1> {doc.name} </h1>
+
         <h2>He is {doc.age}</h2>
+
+        <button className="age__increaser" onClick={() => updateAge(doc.id, doc.age)}>
+          Increase tha age!!
+        </button>
+
         <h3>Aaaand his id is {doc.id} </h3>
         <br></br>
-      </> )}
+        <br></br>
+      </div> )}
     </div>
   );
 }
